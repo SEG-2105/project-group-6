@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "100062840360",
+    "project_id": "rentro-d3335",
+    "storage_bucket": "rentro-d3335.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100062840360:android:a5d67e45c94102b6f3571d",
+        "android_client_info": {
+          "package_name": "com.example.rentron"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGBcP71bXyzMK_jpx-YrPhGPQ13d95VI0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
