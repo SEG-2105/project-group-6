@@ -18,8 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText emailEditText, passwordEditText, firstNameEditText, lastNameEditText, addressEditText;
-    private Spinner userTypeSpinner; // Add a Spinner for user type
+    private EditText firstNameEditText, lastNameEditText, emailEditText, passwordEditText, addressEditText;
+    private Spinner userTypeSpinner;
     private Button loginButton, registerButton;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        emailEditText = findViewById(R.id.email);
-        passwordEditText = findViewById(R.id.password);
         firstNameEditText = findViewById(R.id.first_name);
         lastNameEditText = findViewById(R.id.last_name);
+        emailEditText = findViewById(R.id.email);
+        passwordEditText = findViewById(R.id.password);
         addressEditText = findViewById(R.id.address);
-        userTypeSpinner = findViewById(R.id.user_type); // Initialize the Spinner for user type
+        userTypeSpinner = findViewById(R.id.user_type);
         loginButton = findViewById(R.id.login_button);
         registerButton = findViewById(R.id.register_button);
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
                     Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    navigateToWelcomeScreen();
+                    navigateToWelcomeScreen(user);
                 }
             } else {
                 Toast.makeText(MainActivity.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String address = addressEditText.getText().toString().trim();
-        String userType = userTypeSpinner.getSelectedItem().toString(); // Get the selected user type
+        String userType = userTypeSpinner.getSelectedItem().toString();
 
         if (TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(email) ||
                 TextUtils.isEmpty(password) || TextUtils.isEmpty(address) || TextUtils.isEmpty(userType)) {
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     databaseReference.child(user.getUid()).setValue(newUser).addOnCompleteListener(task1 -> {
                         if (task1.isSuccessful()) {
                             Toast.makeText(MainActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                            navigateToWelcomeScreen();
+                            navigateToWelcomeScreen(user);
                         } else {
                             Toast.makeText(MainActivity.this, "Failed to save user data: " + task1.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
@@ -117,8 +117,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void navigateToWelcomeScreen() {
+    private void navigateToWelcomeScreen(FirebaseUser user) {
         Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+        intent.putExtra("userUid", user.getUid());
         startActivity(intent);
         finish();
     }

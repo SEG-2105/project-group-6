@@ -33,7 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-        String uid = mAuth.getCurrentUser().getUid();
+        String uid = getIntent().getStringExtra("userUid");
 
         databaseReference.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
