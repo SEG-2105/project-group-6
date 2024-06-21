@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="replacePropertyManagerButton" type="id" />
+    <item name="invitePropertyManagerButton" type="id" />
+    <item name="viewPropertyDetailsButton" type="id" />
+    <item name="assignRandomClientButton" type="id" />
+    <item name="saveNewRentButton" type="id" />
+</resources>

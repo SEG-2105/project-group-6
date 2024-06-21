@@ -1,7 +1,6 @@
 package com.example.rentron;
 
 import android.app.Application;
-
 import com.google.firebase.FirebaseApp;
 
 public class MyApplication extends Application {

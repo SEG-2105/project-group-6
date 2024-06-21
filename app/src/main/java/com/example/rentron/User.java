@@ -8,10 +8,6 @@ public class User {
     private String address;
     private String userType;
 
-    // Default constructor required for Firebase or any serialization library
-    public User() {
-    }
-
     public User(String firstName, String lastName, String email, String password, String address, String userType) {
         this.firstName = firstName;
         this.lastName = lastName;

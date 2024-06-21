@@ -1,4 +1,7 @@
-package com.example.rentron;
+package com.example.rentron.consoleapp;
+
+import com.example.rentron.Property;
+import com.example.rentron.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +11,7 @@ public class App {
     private static List<User> users = new ArrayList<>();
     private static List<Property> properties = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void run() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to Rentron!");
@@ -21,10 +24,16 @@ public class App {
 
             switch (option) {
                 case 1:
-                    registerUser(scanner);
+                    User registeredUser = registerUser(scanner);
+                    if (registeredUser != null) {
+                        showWelcomeScreen(scanner, registeredUser);
+                    }
                     break;
                 case 2:
-                    loginUser(scanner);
+                    User loggedInUser = loginUser(scanner);
+                    if (loggedInUser != null) {
+                        showWelcomeScreen(scanner, loggedInUser);
+                    }
                     break;
                 case 3:
                     System.out.println("Goodbye!");
@@ -36,7 +45,7 @@ public class App {
         }
     }
 
-    private static void registerUser(Scanner scanner) {
+    private static User registerUser(Scanner scanner) {
         System.out.print("First Name: ");
         String firstName = scanner.nextLine();
         System.out.print("Last Name: ");
@@ -53,9 +62,10 @@ public class App {
         User user = new User(firstName, lastName, email, password, address, userType);
         users.add(user);
         System.out.println("User registered successfully!");
+        return user;
     }
 
-    private static void loginUser(Scanner scanner) {
+    private static User loginUser(Scanner scanner) {
         System.out.print("Email: ");
         String email = scanner.nextLine();
         System.out.print("Password: ");
@@ -64,13 +74,21 @@ public class App {
         for (User user : users) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 System.out.println("Login successful! Welcome, " + user.getFirstName());
-                if (user.getUserType().equals("landlord")) {
-                    showLandlordMenu(scanner, user);
-                }
-                return;
+                return user;
             }
         }
         System.out.println("Login failed.");
+        return null;
+    }
+
+    private static void showWelcomeScreen(Scanner scanner, User user) {
+        System.out.println("Hello, " + user.getFirstName() + "!");
+
+        if ("landlord".equals(user.getUserType())) {
+            showLandlordMenu(scanner, user);
+        } else {
+            showClientOrManagerMenu(scanner, user);
+        }
     }
 
     private static void showLandlordMenu(Scanner scanner, User landlord) {
@@ -92,6 +110,27 @@ public class App {
                     invitePropertyManager(scanner, landlord);
                     break;
                 case 4:
+                    System.out.println("Logging out...");
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private static void showClientOrManagerMenu(Scanner scanner, User user) {
+        while (true) {
+            System.out.println("\n" + user.getUserType() + " Menu:");
+            System.out.println("1. View Properties\n2. Logout");
+            System.out.print("Choose an option: ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (option) {
+                case 1:
+                    viewProperties(user);
+                    break;
+                case 2:
                     System.out.println("Logging out...");
                     return;
                 default:
@@ -134,7 +173,7 @@ public class App {
         System.out.println("Property added successfully!");
     }
 
-    private static void viewProperties(User landlord) {
+    private static void viewProperties(User user) {
         System.out.println("Properties:");
         for (Property property : properties) {
             System.out.println(property.getAddress() + " - " + property.getType());

@@ -15,9 +15,6 @@ public class Property {
     private boolean utilitiesHeating;
     private boolean utilitiesWater;
 
-    public Property() {
-    }
-
     public Property(String address, String type, int floor, int numRooms, int numBathrooms, int numFloors, int totalArea, boolean laundryInUnit, int parkingSpots, double totalRent, boolean utilitiesHydro, boolean utilitiesHeating, boolean utilitiesWater) {
         this.address = address;
         this.type = type;

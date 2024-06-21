@@ -1,75 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <LinearLayout
+        android:id="@+id/loginForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <EditText
-            android:id="@+id/first_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="First Name"
-            android:layout_marginTop="8dp"
-            android:visibility="visible" />
-
-        <EditText
-            android:id="@+id/last_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Last Name"
-            android:layout_marginTop="8dp"
-            android:visibility="visible" />
-
-        <EditText
-            android:id="@+id/email"
+            android:id="@+id/loginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
-            android:layout_marginTop="8dp"
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/loginPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:layout_marginTop="8dp" />
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/registerForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <EditText
-            android:id="@+id/address"
+            android:id="@+id/registerFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/registerLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/registerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/registerPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/registerAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Address"
-            android:layout_marginTop="8dp"
-            android:visibility="visible" />
+            android:inputType="textPostalAddress" />
 
-        <Spinner
-            android:id="@+id/user_type"
+        <EditText
+            android:id="@+id/registerUserType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/user_types"
-            android:layout_marginTop="8dp"
-            android:visibility="visible" />
+            android:hint="User Type (e.g., Landlord)"
+            android:inputType="text" />
 
         <Button
-            android:id="@+id/login_button"
+            android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:layout_marginTop="16dp" />
-
-        <Button
-            android:id="@+id/register_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            android:layout_marginTop="8dp" />
-
+            android:text="Register" />
     </LinearLayout>
-</ScrollView>
+
+    <Button
+        android:id="@+id/switchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Switch to Register" />
+
+    <Button
+        android:id="@+id/viewPropertyDetailsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Property Details"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/assignRandomClientButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Assign Random Client"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/invitePropertyManagerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Invite Property Manager"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/replacePropertyManagerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Replace Property Manager"
+        android:enabled="false" />
+    <Button
+        android:id="@+id/addPropertyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Property" />
+
+</LinearLayout>

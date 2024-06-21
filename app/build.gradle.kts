@@ -33,11 +33,11 @@ android {
 }
 
 dependencies {
-    // Firebase BOM for managing Firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-firestore") // Add Firestore dependency
 
     // AndroidX and Material dependencies
     implementation("androidx.appcompat:appcompat:1.3.1")
