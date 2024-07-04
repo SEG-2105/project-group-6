@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/propertyType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Property Type"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/minRooms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Min Rooms"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/minBathrooms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Min Bathrooms"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/minArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Min Area"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/minRent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Min Rent"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/maxRent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Max Rent"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search" />
+
+</LinearLayout>

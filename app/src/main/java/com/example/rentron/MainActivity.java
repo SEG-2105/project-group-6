@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayout loginForm, registerForm;
     private Button switchButton, loginButton, registerButton;
-    private Button viewPropertyDetailsButton, assignRandomClientButton, invitePropertyManagerButton, replacePropertyManagerButton, addPropertyButton;
+    private Button viewPropertyDetailsButton, assignRandomClientButton, invitePropertyManagerButton, replacePropertyManagerButton, addPropertyButton, viewAvailablePropertiesButton, searchPropertiesButton, submitRentalRequestButton, viewRequestsButton, createTicketButton, viewTicketsButton;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private SharedPreferences sharedPreferences;
@@ -56,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
         invitePropertyManagerButton = findViewById(R.id.invitePropertyManagerButton);
         replacePropertyManagerButton = findViewById(R.id.replacePropertyManagerButton);
         addPropertyButton = findViewById(R.id.addPropertyButton);
+        viewAvailablePropertiesButton = findViewById(R.id.viewAvailablePropertiesButton);
+        searchPropertiesButton = findViewById(R.id.searchPropertiesButton);
+        submitRentalRequestButton = findViewById(R.id.submitRentalRequestButton);
+        viewRequestsButton = findViewById(R.id.viewRequestsButton);
+        createTicketButton = findViewById(R.id.createTicketButton);
+        viewTicketsButton = findViewById(R.id.viewTicketsButton);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -153,6 +159,48 @@ public class MainActivity extends AppCompatActivity {
                 showAddPropertyDialog();
             }
         });
+
+        viewAvailablePropertiesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewAvailableProperties();
+            }
+        });
+
+        searchPropertiesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSearchPropertiesDialog();
+            }
+        });
+
+        submitRentalRequestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSubmitRentalRequestDialog();
+            }
+        });
+
+        viewRequestsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewRequests();
+            }
+        });
+
+        createTicketButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCreateTicketDialog();
+            }
+        });
+
+        viewTicketsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewTickets();
+            }
+        });
     }
 
     private void loginUser(String email, String password) {
@@ -231,13 +279,24 @@ public class MainActivity extends AppCompatActivity {
             invitePropertyManagerButton.setEnabled(false);
             replacePropertyManagerButton.setEnabled(false);
             addPropertyButton.setEnabled(false);
-            Toast.makeText(this, "Access restricted to landlords only", Toast.LENGTH_SHORT).show();
+            viewAvailablePropertiesButton.setEnabled(true);
+            searchPropertiesButton.setEnabled(true);
+            submitRentalRequestButton.setEnabled(true);
+            viewRequestsButton.setEnabled(true);
+            createTicketButton.setEnabled(true);
+            viewTicketsButton.setEnabled(true);
         } else {
             viewPropertyDetailsButton.setEnabled(true);
             assignRandomClientButton.setEnabled(true);
             invitePropertyManagerButton.setEnabled(true);
             replacePropertyManagerButton.setEnabled(true);
             addPropertyButton.setEnabled(true);
+            viewAvailablePropertiesButton.setEnabled(false);
+            searchPropertiesButton.setEnabled(false);
+            submitRentalRequestButton.setEnabled(false);
+            viewRequestsButton.setEnabled(false);
+            createTicketButton.setEnabled(false);
+            viewTicketsButton.setEnabled(false);
         }
     }
 
@@ -497,5 +556,240 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void viewAvailableProperties() {
+        db.collection("properties").whereEqualTo("occupied", false)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                String address = document.getString("address");
+                                String type = document.getString("type");
+                                double rent = document.getDouble("rent");
+                                Log.d("Property", "Address: " + address + ", Type: " + type + ", Rent: " + rent);
+                            }
+                        } else {
+                            Toast.makeText(MainActivity.this, "Failed to load properties", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void showSearchPropertiesDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.dialog_search_properties, null);
+        builder.setView(dialogView);
+
+        EditText typeEditText = dialogView.findViewById(R.id.propertyType);
+        EditText minRoomsEditText = dialogView.findViewById(R.id.minRooms);
+        EditText minBathroomsEditText = dialogView.findViewById(R.id.minBathrooms);
+        EditText minAreaEditText = dialogView.findViewById(R.id.minArea);
+        EditText minRentEditText = dialogView.findViewById(R.id.minRent);
+        EditText maxRentEditText = dialogView.findViewById(R.id.maxRent);
+        Button searchButton = dialogView.findViewById(R.id.searchButton);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String type = typeEditText.getText().toString();
+                int minRooms = !minRoomsEditText.getText().toString().isEmpty() ? Integer.parseInt(minRoomsEditText.getText().toString()) : 0;
+                int minBathrooms = !minBathroomsEditText.getText().toString().isEmpty() ? Integer.parseInt(minBathroomsEditText.getText().toString()) : 0;
+                int minArea = !minAreaEditText.getText().toString().isEmpty() ? Integer.parseInt(minAreaEditText.getText().toString()) : 0;
+                double minRent = !minRentEditText.getText().toString().isEmpty() ? Double.parseDouble(minRentEditText.getText().toString()) : 0.0;
+                double maxRent = !maxRentEditText.getText().toString().isEmpty() ? Double.parseDouble(maxRentEditText.getText().toString()) : Double.MAX_VALUE;
+
+                searchProperties(type, minRooms, minBathrooms, minArea, minRent, maxRent);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void searchProperties(String type, int minRooms, int minBathrooms, int minArea, double minRent, double maxRent) {
+        db.collection("properties").whereEqualTo("occupied", false)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                String propertyType = document.getString("type");
+                                int numRooms = document.getLong("numRooms").intValue();
+                                int numBathrooms = document.getLong("numBathrooms").intValue();
+                                int area = document.getLong("area").intValue();
+                                double rent = document.getDouble("rent");
+
+                                if ((type.isEmpty() || propertyType.equalsIgnoreCase(type)) &&
+                                        numRooms >= minRooms &&
+                                        numBathrooms >= minBathrooms &&
+                                        area >= minArea &&
+                                        rent >= minRent && rent <= maxRent) {
+                                    String address = document.getString("address");
+                                    Log.d("Property", "Address: " + address + ", Type: " + propertyType + ", Rent: " + rent);
+                                }
+                            }
+                        } else {
+                            Toast.makeText(MainActivity.this, "Failed to search properties", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void showSubmitRentalRequestDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.dialog_submit_rental_request, null);
+        builder.setView(dialogView);
+
+        EditText propertyAddressEditText = dialogView.findViewById(R.id.propertyAddress);
+        Button submitButton = dialogView.findViewById(R.id.submitButton);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String propertyAddress = propertyAddressEditText.getText().toString();
+                submitRentalRequest(propertyAddress);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void submitRentalRequest(String propertyAddress) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            Map<String, Object> rentalRequest = new HashMap<>();
+            rentalRequest.put("clientEmail", user.getEmail());
+            rentalRequest.put("propertyAddress", propertyAddress);
+            rentalRequest.put("resolved", false);
+            rentalRequest.put("rejected", false);
+
+            db.collection("rentalRequests").add(rentalRequest)
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "Rental request submitted", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to submit rental request: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void viewRequests() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            db.collection("rentalRequests").whereEqualTo("clientEmail", user.getEmail())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                    String propertyAddress = document.getString("propertyAddress");
+                                    boolean resolved = document.getBoolean("resolved");
+                                    boolean rejected = document.getBoolean("rejected");
+
+                                    if (!resolved && !rejected) {
+                                        Log.d("Request", "Property: " + propertyAddress + " - Status: Active");
+                                    } else if (rejected) {
+                                        Log.d("Request", "Property: " + propertyAddress + " - Status: Rejected");
+                                    }
+                                }
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to load requests", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void showCreateTicketDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.dialog_create_ticket, null);
+        builder.setView(dialogView);
+
+        EditText propertyAddressEditText = dialogView.findViewById(R.id.propertyAddress);
+        EditText ticketTypeEditText = dialogView.findViewById(R.id.ticketType);
+        EditText messageEditText = dialogView.findViewById(R.id.message);
+        EditText urgencyEditText = dialogView.findViewById(R.id.urgency);
+        Button createTicketButton = dialogView.findViewById(R.id.createTicketButton);
+
+        createTicketButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String propertyAddress = propertyAddressEditText.getText().toString();
+                String type = ticketTypeEditText.getText().toString();
+                String message = messageEditText.getText().toString();
+                int urgency = Integer.parseInt(urgencyEditText.getText().toString());
+
+                createTicket(propertyAddress, type, message, urgency);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void createTicket(String propertyAddress, String type, String message, int urgency) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            Map<String, Object> ticket = new HashMap<>();
+            ticket.put("propertyAddress", propertyAddress);
+            ticket.put("type", type);
+            ticket.put("message", message);
+            ticket.put("urgency", urgency);
+            ticket.put("clientEmail", user.getEmail());
+            ticket.put("resolved", false);
+
+            db.collection("tickets").add(ticket)
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "Ticket created successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to create ticket: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void viewTickets() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            db.collection("tickets").whereEqualTo("clientEmail", user.getEmail())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                    String propertyAddress = document.getString("propertyAddress");
+                                    String type = document.getString("type");
+                                    boolean resolved = document.getBoolean("resolved");
+
+                                    if (!resolved) {
+                                        Log.d("Ticket", "Property: " + propertyAddress + ", Type: " + type + " - Status: Active");
+                                    } else {
+                                        Log.d("Ticket", "Property: " + propertyAddress + ", Type: " + type + " - Status: Closed");
+                                    }
+                                }
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to load tickets", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
     }
 }

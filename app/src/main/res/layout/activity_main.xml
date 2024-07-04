@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -121,10 +120,54 @@
         android:layout_height="wrap_content"
         android:text="Replace Property Manager"
         android:enabled="false" />
+
     <Button
         android:id="@+id/addPropertyButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Property" />
+        android:text="Add Property"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/viewAvailablePropertiesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Available Properties"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/searchPropertiesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search Properties"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/submitRentalRequestButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Rental Request"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/viewRequestsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Requests"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/createTicketButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Ticket"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/viewTicketsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Tickets"
+        android:enabled="false" />
 
 </LinearLayout>
