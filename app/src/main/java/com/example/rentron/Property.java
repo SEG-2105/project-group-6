@@ -14,8 +14,11 @@ public class Property {
     private boolean utilitiesHydro;
     private boolean utilitiesHeating;
     private boolean utilitiesWater;
+    private String managerEmail;
+    private boolean occupied;
+    private String landlordEmail;
 
-    public Property(String address, String type, int floor, int numRooms, int numBathrooms, int numFloors, int totalArea, boolean laundryInUnit, int parkingSpots, double totalRent, boolean utilitiesHydro, boolean utilitiesHeating, boolean utilitiesWater) {
+    public Property(String address, String type, int floor, int numRooms, int numBathrooms, int numFloors, int totalArea, boolean laundryInUnit, int parkingSpots, double totalRent, boolean utilitiesHydro, boolean utilitiesHeating, boolean utilitiesWater, String managerEmail, String landlordEmail) {
         this.address = address;
         this.type = type;
         this.floor = floor;
@@ -29,6 +32,9 @@ public class Property {
         this.utilitiesHydro = utilitiesHydro;
         this.utilitiesHeating = utilitiesHeating;
         this.utilitiesWater = utilitiesWater;
+        this.managerEmail = managerEmail;
+        this.occupied = false;
+        this.landlordEmail = landlordEmail;
     }
 
     // Getters and setters
@@ -70,4 +76,13 @@ public class Property {
 
     public boolean isUtilitiesWater() { return utilitiesWater; }
     public void setUtilitiesWater(boolean utilitiesWater) { this.utilitiesWater = utilitiesWater; }
+
+    public String getManagerEmail() { return managerEmail; }
+    public void setManagerEmail(String managerEmail) { this.managerEmail = managerEmail; }
+
+    public boolean isOccupied() { return occupied; }
+    public void setOccupied(boolean occupied) { this.occupied = occupied; }
+
+    public String getLandlordEmail() { return landlordEmail; }
+    public void setLandlordEmail(String landlordEmail) { this.landlordEmail = landlordEmail; }
 }

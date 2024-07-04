@@ -19,6 +19,12 @@
         <meta-data
             android:name="com.google.firebase.analytics.event_log_enabled"
             android:value="true" />
+        <meta-data
+            android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+            android:value="com.google.firebase.auth.FirebaseAuth" />
+        <meta-data
+            android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreRegistrar"
+            android:value="com.google.firebase.firestore.FirebaseFirestore" />
 
         <!-- Ensure MainActivity is the launcher activity -->
         <activity android:name=".MainActivity"
@@ -30,9 +36,6 @@
         </activity>
 
         <!-- Other activities and services -->
-        <!-- Example:
-        <activity android:name=".AnotherActivity"></activity>
-        -->
     </application>
 
     <!-- Required permissions -->
