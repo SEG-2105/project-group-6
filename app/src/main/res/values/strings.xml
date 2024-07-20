@@ -1,8 +1,123 @@
 <resources>
     <string name="app_name">Rentron</string>
-    <string-array name="user_types">
-        <item>landlord</item>
-        <item>client</item>
-        <item>propertyManager</item>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="logo_here">logo_here</string>
+    <string name="log_in">LOG IN</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="instruction_text">Please submit an image of a void cheque for payment:</string>
+    <string name="submit_text"><![CDATA[Submit ->]]></string>
+    <string name="take_photo">Take Photo</string>
+    <string name="upload_photo">Upload Image/File</string>
+    <string name="photo_button_description">Press to take picture of void cheque</string>
+    <string name="upload_button_description">Upload an image of void cheque</string>
+    <string name="logoDescription">an image of our logo</string>
+    <string name="title">Rentron</string>
+    <string name="signUpBtn">SIGN UP</string>
+    <string name="sign_up_underline"><u>Sign up</u></string>
+    <string name="loginBtn">LOG IN</string>
+    <string name="ticket_header">Ticket Title Here</string>
+    <string name="client_name">Client:</string>
+    <string name="landlord_name" />
+    <string name="landlords_name">Landlord:</string>
+    <string name="property_name">Property</string>
+    <string name="description_title">Description:</string>
+    <string name="ban_landlord">Ban Until</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="ticket_information">Ticket Here</string>
+    <string name="ban_permanent">Ban Indefinitely</string>
+    <string name="landlord_permanent_ban_message">Your account has been permanently suspended.</string>
+    <string name="landlord_temp_ban_message">Your account has been temporarily suspended until</string>
+    <string name="what_property_would_you_like_to_add">WHAT PROPERTY WOULD YOU LIKE TO ADD?</string>
+    <string name="property_type">Property type:</string>
+    <string-array name="property_types_array">
+        <item>(Select property type)</item>
+        <item>Apartment</item>
+        <item>House</item>
+        <item>Condo</item>
+        <item>Townhouse</item>
+        <item>Studio</item>
+        <item>Villa</item>
     </string-array>
+    <string name="property_features">Property Features</string>
+    <string name="rooms">Rooms:</string>
+    <string name="bathrooms">Bathrooms:</string>
+    <string name="amenities">Amenities:</string>
+    <string name="laundry">Laundry</string>
+    <string name="parking">Parking</string>
+    <string name="floors">Floors</string>
+    <string name="price">Price</string>
+    <string name="back">Back</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="offer_property">Offer property?</string>
+    <string name="property_item_offered_label">Offered:</string>
+    <string name="property_item_type_label">Type:</string>
+    <string name="submit">Submit</string>
+    <string name="view_requests">View Requests</string>
+    <string name="my_properties">Properties</string>
+    <string name="view_offered_properties">Offered Properties</string>
+    <string name="add_property">Add Property</string>
+    <string name="properties_label">Properties</string>
+    <string name="requests_label">Requests</string>
+    <string name="view_pending_requests_label">Pending Requests</string>
+    <string name="view_completed_requests_label">Past Requests</string>
+    <string name="type_of_property">Type of Property:</string>
+    <string name="unable_to_get_info">unable to get info</string>
+    <string name="any_special_instructions">Any special instructions for the landlord?</string>
+    <string name="checkout">Checkout</string>
+    <string name="add_or_remove_from_cart">Add/Remove From Cart</string>
+    <string name="request">Request</string>
+    <string name="minus">-</string>
+    <string name="number">#</string>
+    <string name="plus">+</string>
+    <string name="spinner_description">spinner description</string>
+    <string name="property_address">Property Address Here</string>
+    <string name="search_properties_btn_label">Search Properties</string>
+    <string name="made_by">Managed by Landlord:</string>
+    <string name="special_instructions">Special Instructions:</string>
+    <string name="requests_in_progress">Requests In Progress</string>
+    <string name="menu">Menu</string>
+    <string name="completed">Complete</string>
+    <string name="view_all_requests_label">View All Requests</string>
+    <string name="property_name_text">Property Name</string>
+    <string name="date">Date</string>
+    <string name="landlord_name_label">Landlord Name</string>
+    <string name="client_name_label">Client Name</string>
+    <string name="fileTicket_button">File Ticket</string>
+    <string name="quantity">Quantity #</string>
+    <string name="ratingBar">clientRateLandlordRatingBar</string>
+    <string name="reject_button">Reject</string>
+    <string name="accept_button">Accept</string>
+    <string name="make_ticket">File Ticket</string>
+    <string name="write_ticket">Please write your ticket:</string>
+    <string name="description_here">Description Here:</string>
+    <string name="title_here">Title:</string>
+    <string name="no_search_result_message">Sorry! No properties found!</string>
+    <string name="total_cost_label">Total Cost:</string>
+    <string name="total_cost_default_amount">0</string>
+    <string name="pay_using_label">Pay using:</string>
+    <string name="default_client_card_info">unable to load card</string>
+    <string name="search">Properties, amenities, etc.</string>
+    <string name="your_requests">Your Requests</string>
+    <string name="landlordRatingBarDescription">This is the rating for the landlord</string>
+    <string name="landlordRatingLabel">Landlord Rating:</string>
+    <string name="landlordName">Landlord Name</string>
+    <string name="landlordLabel">Landlord:</string>
+    <string name="propertyDescription">Property Description</string>
+    <string name="description">Description</string>
+    <string name="propertyName">Property Name</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="os_landlord_address_label">Landlord\'s address:</string>
+    <string name="os_landlord_rating_label">Rating:</string>
+    <string name="accepted_request_status_being_prepared">being prepared</string>
+    <string name="os_landlord_desc_label">Description:</string>
+    <string name="num_of_properties_sold">Number of Properties Sold:</string>
+    <string name="profile">Profile</string>
 </resources>

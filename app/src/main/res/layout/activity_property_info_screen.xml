@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="property"
+            type="com.example.rentron.data.entity_models.PropertyEntityModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        tools:context=".ui.screens.PropertyInfoScreen">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/back_btn"
+                    android:layout_width="48dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/back_button_margin"
+                    android:layout_marginTop="@dimen/back_button_margin"
+                    android:background="#00FFFFFF"
+                    android:contentDescription="@string/back"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/backbutton" />
+
+                <TextView
+                    android:id="@+id/address_of_property"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo_bhai"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/title_padding"
+                    android:text="@{property.address}"
+                    android:textColor="@color/colorDefaultText"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/price_of_property"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo_bhai"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text='@{"$" + String.valueOf(property.price)}'
+                    android:textColor="@color/colorDefaultText"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/type_of_property"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="30dp"
+                        android:text="@string/type_of_property"
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/property_msg_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/type_of_property"
+                        android:fontFamily="@font/nunito_sans"
+                        android:gravity="center_horizontal"
+                        android:text="@{property.propertyType}"
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/bathroom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="30dp"
+                        android:text="Bathrooms"
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/msg_bathroom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/bathroom"
+                        android:fontFamily="@font/nunito_sans"
+                        android:gravity="center_horizontal"
+                        android:text='@{String.valueOf(property.bathrooms)}'
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/amenities"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="30dp"
+                        android:text="Amenities"
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/msg_amenities"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/amenities"
+                        android:fontFamily="@font/nunito_sans"
+                        android:gravity="center_horizontal"
+                        android:text='@{property.amenities.toString()}'
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/floors"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="30dp"
+                        android:text="Floors"
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/msg_floors"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/floors"
+                        android:fontFamily="@font/nunito_sans"
+                        android:gravity="center_horizontal"
+                        android:text='@{String.valueOf(property.floors)}'
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/laundry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="30dp"
+                        android:text="Laundry"
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/msg_laundry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/laundry"
+                        android:fontFamily="@font/nunito_sans"
+                        android:gravity="center_horizontal"
+                        android:text='@{property.laundry ? "Yes" : "No"}'
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/parking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="30dp"
+                        android:text="Parking"
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/msg_parking"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/parking"
+                        android:fontFamily="@font/nunito_sans"
+                        android:gravity="center_horizontal"
+                        android:text='@{String.valueOf(property.parking)}'
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/description_of_property"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_sans"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="30dp"
+                        android:text="@string/description_title"
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/msg_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/description_of_property"
+                        android:fontFamily="@font/nunito_sans"
+                        android:gravity="center_horizontal"
+                        android:text='@{property.description}'
+                        android:textColor="@color/colorDefaultText"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/offering_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/baloo_bhai"
+                        android:text="offer/unoffer property"
+                        tools:ignore="TextContrastCheck" />
+
+                    <Button
+                        android:id="@+id/remove_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/baloo_bhai"
+                        android:text="Remove Property"
+                        tools:ignore="TextContrastCheck" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

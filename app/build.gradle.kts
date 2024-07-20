@@ -5,45 +5,64 @@ plugins {
 
 android {
     namespace = "com.example.rentron"
-    compileSdk = 34
+    compileSdkVersion(33)
+    buildToolsVersion("30.0.3")
 
     defaultConfig {
         applicationId = "com.example.rentron"
-        minSdk = 24
-        targetSdk = 34
+        minSdkVersion(19)
+        targetSdkVersion(33)
         versionCode = 1
         versionName = "1.0"
-
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    applicationVariants.all {
+        outputs.all {
+            val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            output.outputFileName = "group4_debug.apk"
+        }
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility(JavaVersion.VERSION_1_8)
+        targetCompatibility(JavaVersion.VERSION_1_8)
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
     }
 }
 
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("androidx.appcompat:appcompat:1.5.1")
+    implementation("com.google.android.material:material:1.7.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.firebase:firebase-database:20.1.0")
+    implementation("androidx.annotation:annotation:1.5.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("com.google.firebase:firebase-auth:21.1.0")
+    implementation("com.google.firebase:firebase-firestore:24.4.1")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation(files("libs/activation.jar"))
+    implementation(files("libs/additionnal.jar"))
+    implementation(files("libs/mail.jar"))
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.testng:testng:6.9.6")
+    androidTestImplementation("androidx.test.ext:junit:1.1.4")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    implementation(platform("com.google.firebase:firebase-bom:31.0.0"))
     implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-database")
-    implementation("com.google.firebase:firebase-firestore")
-
-    implementation("com.google.code.gson:gson:2.8.8")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-
-    implementation("com.google.firebase:firebase-database:20.0.5")
-    implementation("com.google.firebase:firebase-auth:21.0.3")
-    implementation("com.google.firebase:firebase-admin:9.1.1")
-    implementation("com.google.auth:google-auth-library-oauth2-http:0.22.0")
+    implementation("com.google.android.material:material:1.4.0")
 }
-

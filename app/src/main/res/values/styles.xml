@@ -15,4 +15,6 @@
         <item name="android:windowLightStatusBar" tools:targetApi="l">true</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.Rentron"></style>
+
 </resources>
