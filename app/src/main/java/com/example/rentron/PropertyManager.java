@@ -1,23 +1,23 @@
 package com.example.rentron;
 
-public class User {
+public class PropertyManager {
     private String id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private String role;
-    private int birthYear; // For clients
+    private double averageRating;
+    private int propertiesManaged;
+    private int ticketsHandled;
 
-    public User() {}
+    public PropertyManager() {}
 
-    public User(String firstName, String lastName, String email, String password, String role, int birthYear) {
+    public PropertyManager(String id, String firstName, String lastName, String email, String password) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.role = role;
-        this.birthYear = birthYear;
     }
 
     // Getters and setters
@@ -61,19 +61,27 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public double getAverageRating() {
+        return averageRating;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
     }
 
-    public int getBirthYear() {
-        return birthYear;
+    public int getPropertiesManaged() {
+        return propertiesManaged;
     }
 
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
+    public void setPropertiesManaged(int propertiesManaged) {
+        this.propertiesManaged = propertiesManaged;
+    }
+
+    public int getTicketsHandled() {
+        return ticketsHandled;
+    }
+
+    public void setTicketsHandled(int ticketsHandled) {
+        this.ticketsHandled = ticketsHandled;
     }
 }

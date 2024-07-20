@@ -1,28 +1,50 @@
 package com.example.rentron;
 
 public class RentalRequest {
-    private String clientEmail;
-    private String propertyAddress;
-    private boolean resolved;
-    private boolean rejected;
+    private String id;
+    private String clientId;
+    private String propertyId;
+    private String status;
 
-    public RentalRequest(String clientEmail, String propertyAddress) {
-        this.clientEmail = clientEmail;
-        this.propertyAddress = propertyAddress;
-        this.resolved = false;
-        this.rejected = false;
+    public RentalRequest() {}
+
+    public RentalRequest(String id, String clientId, String propertyId, String status) {
+        this.id = id;
+        this.clientId = clientId;
+        this.propertyId = propertyId;
+        this.status = status;
     }
 
     // Getters and setters
-    public String getClientEmail() { return clientEmail; }
-    public void setClientEmail(String clientEmail) { this.clientEmail = clientEmail; }
+    public String getId() {
+        return id;
+    }
 
-    public String getPropertyAddress() { return propertyAddress; }
-    public void setPropertyAddress(String propertyAddress) { this.propertyAddress = propertyAddress; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public boolean isResolved() { return resolved; }
-    public void setResolved(boolean resolved) { this.resolved = resolved; }
+    public String getClientId() {
+        return clientId;
+    }
 
-    public boolean isRejected() { return rejected; }
-    public void setRejected(boolean rejected) { this.rejected = rejected; }
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(String propertyId) {
+        this.propertyId = propertyId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
