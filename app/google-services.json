@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "100062840360",
-    "project_id": "rentro-d3335",
-    "storage_bucket": "rentro-d3335.appspot.com"
+    "project_number": "750699970911",
+    "firebase_url": "https://rentron2-default-rtdb.firebaseio.com",
+    "project_id": "rentron2",
+    "storage_bucket": "rentron2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:100062840360:android:a5d67e45c94102b6f3571d",
+        "mobilesdk_app_id": "1:750699970911:android:ac5a1b4cb452d7d3b5f6ea",
         "android_client_info": {
           "package_name": "com.example.rentron"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDGBcP71bXyzMK_jpx-YrPhGPQ13d95VI0"
+          "current_key": "AIzaSyAM2iBbxEFwoS2qOimy01MLKI-gPppH47I"
         }
       ],
       "services": {

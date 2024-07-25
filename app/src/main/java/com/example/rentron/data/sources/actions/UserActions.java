@@ -44,127 +44,88 @@ public class UserActions {
     }
 
     protected void getUserById(String userId, LoginScreen loginScreen) {
-        // first check if Property Manager
-        // then check if Client
-        // then check if Landlord
+        Log.d("UserActions", "Getting user by ID: " + userId);
         DocumentReference userReference = database.collection(PROPERTY_MANAGER_COLLECTION).document(userId);
 
         userReference.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    if (document.getData() != null){
-                        Response r = makePropertyManagerFromFirebase(document, userId);
-                        if (loginScreen != null && r.isSuccess()) {
-                            loginScreen.showNextScreen();
-                        } else if (loginScreen != null){
-                            Log.e("Login failed for property manager", r.getErrorMessage());
-                            loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN, "Login failed for property manager: " + r.getErrorMessage());
-                        }
-
-                        if (r.isError()) {
-                            Log.e("getUserById: ", r.getErrorMessage());
-                        }
+                if (document.exists() && document.getData() != null) {
+                    Log.d("UserActions", "User found in Property Manager collection for ID: " + userId);
+                    Response r = makePropertyManagerFromFirebase(document, userId);
+                    if (loginScreen != null && r.isSuccess()) {
+                        loginScreen.showNextScreen();
+                    } else if (loginScreen != null) {
+                        Log.e("UserActions", "Login failed for property manager: " + r.getErrorMessage());
+                        loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN, "Login failed for property manager: " + r.getErrorMessage());
                     }
-
                 } else {
-                    // if user not in Property Manager collection, check Landlord
+                    Log.d("UserActions", "User not found in Property Manager collection, checking Landlord collection for ID: " + userId);
                     getLandlordById(userId, loginScreen);
                 }
             } else {
-                Log.d(TAG, "get failed with ", task.getException());
+                Log.e("UserActions", "Failed to get user from Property Manager collection", task.getException());
             }
         });
     }
 
     protected void getLandlordById(String userId, LoginScreen loginScreen) {
+        Log.d("UserActions", "Getting landlord by ID: " + userId);
         DocumentReference userReference = database.collection(LANDLORD_COLLECTION).document(userId);
 
-        // get Landlord's data
         userReference.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                if (document.exists() && document.getData() != null) {
+                    Log.d("UserActions", "User found in Landlord collection for ID: " + userId);
+                    boolean isSuspended = (Boolean) document.getData().get("isSuspended");
+                    Response r = makeLandlordFromFirebase(document);
 
-                    if (document.getData() != null){
-
-                        // if landlord is suspended, we don't need to store Landlord data locally
-
-                        // get value of isSuspended for check
-                        boolean isSuspended = (Boolean) document.getData().get("isSuspended");
-
-                        Response r = makeLandlordFromFirebase(document);
-
-                        // if landlord is suspended, return right away with empty landlord
-                        if (isSuspended) {
-                            // get suspension date
-                            if (document.getData().get("suspensionDate") != null) {
-                                String landlordSuspensionDate = String.valueOf((document.getData().get("suspensionDate")));
-
-                                // inform UI that Landlord is suspended and provide it suspension date
-                                loginScreen.handleSuspendedLandlordLogin(landlordSuspensionDate, String.valueOf(document.getData().get("firstName")));
-                            } else {
-                                loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN,"Could not retrieve a valid date for suspended landlord");
-                            }
-                            // return
-                            new Response(false, "Landlord is suspended");
-                        }
-
-                        // if Landlord is not suspended, we create the Landlord instance
-                        else {
-                            if (loginScreen != null && r.isSuccess()) {
-                                // load Landlord's properties
-                                // app's user should have been set to the Landlord by this point (App.getUser() = logged in landlord)
-                                App.getPrimaryDatabase().REQUESTS.loadLandlordRequests(userId);
-                                App.getPrimaryDatabase().PROPERTIES.loadLandlordProperties(loginScreen);
-
-                            } else if (loginScreen != null){
-                                Log.e("Login failed for landlord", r.getErrorMessage());
-                                loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN,"Login failed, " + r.getErrorMessage());
-                            }
+                    if (isSuspended) {
+                        String landlordSuspensionDate = String.valueOf(document.getData().get("suspensionDate"));
+                        loginScreen.handleSuspendedLandlordLogin(landlordSuspensionDate, String.valueOf(document.getData().get("firstName")));
+                        new Response(false, "Landlord is suspended");
+                    } else {
+                        if (loginScreen != null && r.isSuccess()) {
+                            App.getPrimaryDatabase().REQUESTS.loadLandlordRequests(userId);
+                            App.getPrimaryDatabase().PROPERTIES.loadLandlordProperties(loginScreen);
+                        } else if (loginScreen != null) {
+                            Log.e("UserActions", "Login failed for landlord: " + r.getErrorMessage());
+                            loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN, "Login failed: " + r.getErrorMessage());
                         }
                     }
-
                 } else {
+                    Log.d("UserActions", "User not found in Landlord collection, checking Client collection for ID: " + userId);
                     getClientById(userId, loginScreen);
                 }
             } else {
-                Log.d(TAG, "get failed with ", task.getException());
+                Log.e("UserActions", "Failed to get user from Landlord collection", task.getException());
             }
         });
-
     }
 
     protected void getClientById(String userId, LoginScreen loginScreen) {
+        Log.d("UserActions", "Getting client by ID: " + userId);
         DocumentReference userReference = database.collection(CLIENT_COLLECTION).document(userId);
 
         userReference.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-
-                    if (document.getData() != null){
-                        Response r = makeClientFromFirebase(document);
-                        if (loginScreen != null && r.isSuccess()) {
-                            App.getPrimaryDatabase().REQUESTS.loadClientRequests(userId);
-                            loginScreen.showNextScreen();
-                        } else if (loginScreen != null){
-                            Log.e("Login failed for client", r.getErrorMessage());
-                            loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN,"Login failed for user: " + r.getErrorMessage());
-                        }
-
-                        if (r.isError()) {
-                            Log.e("getUserById: ", r.getErrorMessage());
-                        }
+                if (document.exists() && document.getData() != null) {
+                    Log.d("UserActions", "User found in Client collection for ID: " + userId);
+                    Response r = makeClientFromFirebase(document);
+                    if (loginScreen != null && r.isSuccess()) {
+                        App.getPrimaryDatabase().REQUESTS.loadClientRequests(userId);
+                        loginScreen.showNextScreen();
+                    } else if (loginScreen != null) {
+                        Log.e("UserActions", "Login failed for client: " + r.getErrorMessage());
+                        loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN, "Login failed for user: " + r.getErrorMessage());
                     }
-
                 } else {
-                    Log.d(TAG, "No such document");
+                    Log.d("UserActions", "No such document for ID: " + userId);
                 }
             } else {
-                Log.d(TAG, "get failed with ", task.getException());
+                Log.e("UserActions", "Failed to get user from Client collection", task.getException());
             }
         });
     }
