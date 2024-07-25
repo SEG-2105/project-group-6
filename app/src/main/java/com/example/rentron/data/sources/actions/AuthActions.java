@@ -1,5 +1,7 @@
 package com.example.rentron.data.sources.actions;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.rentron.app.App;
@@ -172,17 +174,27 @@ public class AuthActions {
     }
 
     public void logInUser(String email, String password, LoginScreen loginScreen) {
+        Log.d("AuthActions", "Attempting to log in user with email: " + email);
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("AuthActions", "Login successful for email: " + email);
                     FirebaseUser user = mAuth.getCurrentUser();
                     if (user != null) {
+                        Log.d("AuthActions", "Retrieving user data for userId: " + user.getUid());
                         firebaseRepository.USER.getUserById(user.getUid(), loginScreen);
+                    } else {
+                        Log.e("AuthActions", "FirebaseUser is null after successful login");
+                        loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN, "FirebaseUser is null after successful login.");
                     }
                 } else {
-                    // If sign in fails, display a message to the user.
-                    loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN, "Incorrect login information: please try again.");
+                    if (task.getException() != null) {
+                        Log.e("AuthActions", "Login failed for email: " + email, task.getException());
+                        loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN, "Login failed: " + task.getException().getMessage());
+                    } else {
+                        Log.e("AuthActions", "Login failed for email: " + email + "for unknown reasons");
+                        loginScreen.dbOperationFailureHandler(UserHandler.dbOperations.USER_LOG_IN, "Login failed for unknown reasons.");
+                    }
                 }
             }
         });
