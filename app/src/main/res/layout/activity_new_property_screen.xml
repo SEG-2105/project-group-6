@@ -100,7 +100,7 @@
                 android:fontFamily="@font/nunito_sans"
                 android:text="@string/garden" />
 
-            <SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/laundry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,18 +124,6 @@
                 android:fontFamily="@font/nunito_sans"
                 android:hint="@string/price"
                 android:inputType="numberDecimal" />
-
-            <EditText
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_sans"
-                android:gravity="start|top"
-                android:hint="@string/description_title"
-                android:inputType="textMultiLine"
-                android:lines="5"
-                android:minHeight="50dp"
-                tools:ignore="TextContrastCheck" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/offer_property_switch"

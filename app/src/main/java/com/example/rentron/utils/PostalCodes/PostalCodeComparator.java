@@ -221,6 +221,28 @@ public class PostalCodeComparator {
     }
 
     /**
+     * Compare two postal codes for sorting
+     * @param postalCode1 first postal code
+     * @param postalCode2 second postal code
+     * @return negative integer if postalCode1 < postalCode2, zero if postalCode1 == postalCode2,
+     * positive integer if postalCode1 > postalCode2
+     */
+    public int ComparePostalCodes(String postalCode1, String postalCode2) {
+        // Remove spaces and convert to uppercase
+        postalCode1 = postalCode1.replaceAll("\\s+", "").toUpperCase(Locale.US);
+        postalCode2 = postalCode2.replaceAll("\\s+", "").toUpperCase(Locale.US);
+
+        // Compare based on the first three characters (FSA)
+        int result = postalCode1.substring(0, 3).compareTo(postalCode2.substring(0, 3));
+        if (result != 0) {
+            return result;
+        }
+
+        // If FSAs are equal, compare based on the last three characters (LDU)
+        return postalCode1.substring(3).compareTo(postalCode2.substring(3));
+    }
+
+    /**
      * Get string representation of the postal code, ex: T6X2X9 (without space)
      * @return string representation of the postal code, ex: T6X2X9 (without space)
      */

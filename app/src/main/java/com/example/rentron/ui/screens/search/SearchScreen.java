@@ -16,7 +16,7 @@ import com.example.rentron.R;
 import com.example.rentron.app.App;
 import com.example.rentron.ui.core.UIScreen;
 import com.example.rentron.ui.screens.checkout.CheckoutScreen;
-import com.example.rentron.utils.PostalCodeComparator;
+import com.example.rentron.utils.PostalCodes.PostalCodeComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -183,7 +183,7 @@ public class SearchScreen extends UIScreen {
 
             // sort the search results by closeness to client (based on postal codes)
             if (postalCodeComparator != null) {
-                Collections.sort(searchResult, (sR1, sR2) -> postalCodeComparator.comparePostalCodes(sR1.getLandlord().getLandlordAddress().getPostalCode(), sR2.getLandlord().getLandlordAddress().getPostalCode()));
+                Collections.sort(searchResult, (sR1, sR2) -> postalCodeComparator.ComparePostalCodes(sR1.getLandlord().getLandlordAddress().getPostalCode(), sR2.getLandlord().getLandlordAddress().getPostalCode()));
                 Log.e("searchProperties", "search results sorted");
             }
             // clear current items in sMItems

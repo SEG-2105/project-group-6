@@ -248,7 +248,6 @@
                         android:layout_toRightOf="@id/description_of_property"
                         android:fontFamily="@font/nunito_sans"
                         android:gravity="center_horizontal"
-                        android:text='@{property.description}'
                         android:textColor="@color/colorDefaultText"
                         android:textSize="16sp" />
                 </RelativeLayout>

@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.SwitchCompat; // Correct import
 
 import com.example.rentron.R;
 import com.example.rentron.app.App;
@@ -18,6 +18,8 @@ import com.example.rentron.data.entity_models.PropertyEntityModel;
 import com.example.rentron.data.handlers.PropertyHandler;
 import com.example.rentron.ui.core.StatefulView;
 import com.example.rentron.ui.core.UIScreen;
+//import androidx.appcompat.widget.SwitchCompat;
+
 
 import java.util.ArrayList;
 
@@ -34,7 +36,7 @@ public class NewPropertyScreen extends UIScreen implements StatefulView {
         /*
         Add information to spinner for property type
          */
-        Spinner spinner = (Spinner) findViewById(R.id.property_type);
+        Spinner spinner = findViewById(R.id.property_type);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -47,7 +49,6 @@ public class NewPropertyScreen extends UIScreen implements StatefulView {
 
         // attach onClick handlers to buttons
         attachOnClickListeners();
-
     }
 
     /**
@@ -56,44 +57,17 @@ public class NewPropertyScreen extends UIScreen implements StatefulView {
     private void attachOnClickListeners() {
 
         // Variable Declaration
-        Button addPropertyButton = (Button) findViewById(R.id.add_property_button);
-        Button backButton = (Button) findViewById(R.id.back_button);
+        Button addPropertyButton = findViewById(R.id.add_property_button);
+        Button backButton = findViewById(R.id.back_button);
 
         // Process: setting the new onClick method for addProperty
-        addPropertyButton.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * this method sets the on click for the add property button
-             * @param view
-             *  the current view
-             */
-            @Override
-            public void onClick(View view) {
-
-                onAddProperty(view); //calling helper method to add the property
-
-            }
-
-        });
+        addPropertyButton.setOnClickListener(view -> onAddProperty(view)); // calling helper method to add the property
 
         // Process: setting the new onClick method for the back button
-        backButton.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * this method sets the on click for the back button
-             * @param view
-             *  the current view
-             */
-            @Override
-            public void onClick(View view) {
-
-                cancelAddingProperty(); //stopping the activity
-                showNextScreen(); //returning the previous screen
-
-            }
-
+        backButton.setOnClickListener(view -> {
+            cancelAddingProperty(); // stopping the activity
+            showNextScreen(); // returning to the previous screen
         });
-
     }
 
     // Helper Methods for Adding the Property------------------------------------------------------------------------
@@ -103,34 +77,25 @@ public class NewPropertyScreen extends UIScreen implements StatefulView {
     private void addAmenitiesToList() {
 
         // Variable Declaration
-        CheckBox currentCheck = (CheckBox) findViewById(R.id.pool_checkbox);
+        CheckBox currentCheck = findViewById(R.id.pool_checkbox);
 
         // Process: adding amenities to list
-        if (currentCheck.isChecked()) { //pool
-
-            amenities.add("Pool"); //adding to amenities array
-
-        }
-
-
-        // updating checkbox
-        currentCheck = (CheckBox) findViewById(R.id.gym_checkbox);
-
-        if (currentCheck.isChecked()) { //gym
-
-            amenities.add("Gym"); //adding to amenities array
-
+        if (currentCheck.isChecked()) { // pool
+            amenities.add("Pool"); // adding to amenities array
         }
 
         // updating checkbox
-        currentCheck = (CheckBox) findViewById(R.id.garden_checkbox);
-        if (currentCheck.isChecked()) { //garden
+        currentCheck = findViewById(R.id.gym_checkbox);
 
-            // Initialization
-            amenities.add("Garden");  //adding to amenities String
-
+        if (currentCheck.isChecked()) { // gym
+            amenities.add("Gym"); // adding to amenities array
         }
 
+        // updating checkbox
+        currentCheck = findViewById(R.id.garden_checkbox);
+        if (currentCheck.isChecked()) { // garden
+            amenities.add("Garden");  // adding to amenities String
+        }
     }
 
     /**
@@ -140,47 +105,47 @@ public class NewPropertyScreen extends UIScreen implements StatefulView {
      */
     public void onAddProperty(View view) {
 
-        addAmenitiesToList(); //calling helper method to add all amenities
+        addAmenitiesToList(); // calling helper method to add all amenities
 
         // Variable Declaration
         String landlordID = App.getUserId();
 
-        EditText propertyAddress = (EditText) findViewById(R.id.property_address);
-        EditText rooms = (EditText) findViewById(R.id.rooms);
-        Spinner propertyType = (Spinner) findViewById(R.id.property_type);
-        EditText bathrooms = (EditText) findViewById(R.id.bathrooms);
-        EditText floors = (EditText) findViewById(R.id.floors);
-        SwitchCompat laundry = (SwitchCompat) findViewById((R.id.laundry));
-        EditText parking = (EditText) findViewById(R.id.parking);
-        EditText description = (EditText) findViewById(R.id.description);
-        EditText price = (EditText) findViewById(R.id.price);
-        SwitchCompat offered = (SwitchCompat) findViewById((R.id.offer_property_switch));
+        EditText propertyAddress = findViewById(R.id.property_address);
+        EditText rooms = findViewById(R.id.rooms);
+        Spinner propertyType = findViewById(R.id.property_type);
+        EditText bathrooms = findViewById(R.id.bathrooms);
+        EditText floors = findViewById(R.id.floors);
+        androidx.appcompat.widget.SwitchCompat laundry = findViewById(R.id.laundry);
+        EditText parking = findViewById(R.id.parking);
+        EditText price = findViewById(R.id.price);
+        androidx.appcompat.widget.SwitchCompat offered = findViewById(R.id.offer_property_switch);
 
         double priceValue;
 
         // Process: validating the price
         try {
-
             // Initialization
             priceValue = Double.parseDouble(price.getText().toString());
 
             // Variable Declaration
-            PropertyEntityModel propertyEntityModel = new PropertyEntityModel(null, landlordID, propertyAddress.getText().toString(), Integer.parseInt(rooms.getText().toString()), propertyType.getSelectedItem().toString(),
-                    Integer.parseInt(bathrooms.getText().toString()), amenities,
-                    Integer.parseInt(floors.getText().toString()), laundry.isChecked(), Integer.parseInt(parking.getText().toString()),
-                    offered.isChecked(), priceValue);
+            PropertyEntityModel propertyEntityModel = new PropertyEntityModel(null, landlordID,
+                    propertyAddress.getText().toString(),
+                    Integer.parseInt(rooms.getText().toString()),
+                    propertyType.getSelectedItem().toString(),
+                    Integer.parseInt(bathrooms.getText().toString()),
+                    amenities,
+                    Integer.parseInt(floors.getText().toString()),
+                    laundry.isChecked(),
+                    Integer.parseInt(parking.getText().toString()),
+                    offered.isChecked(),
+                    priceValue);
 
+            App.PROPERTY_HANDLER.dispatch(PropertyHandler.dbOperations.ADD_PROPERTY, propertyEntityModel, this); // calling add property method from propertyhandler
 
-            App.PROPERTY_HANDLER.dispatch(PropertyHandler.dbOperations.ADD_PROPERTY, propertyEntityModel, this); //calling add property method from propertyhandler
-
-        }
-        catch(NumberFormatException e) {
-
+        } catch (NumberFormatException e) {
             // error toast here
             displayErrorToast("Invalid price");
-
         }
-
     }
 
     /**
@@ -207,7 +172,6 @@ public class NewPropertyScreen extends UIScreen implements StatefulView {
 
         // Process: starting new intent
         startActivity(intent);
-
     }
 
     // Firebase Methods------------------------------------------------------------------------------------------
@@ -218,7 +182,7 @@ public class NewPropertyScreen extends UIScreen implements StatefulView {
             displaySuccessToast((String) payload);
             // finish the activity and return
             this.setResult(Activity.RESULT_OK);
-            this.finish(); //returning to landlord's main screen
+            this.finish(); // returning to landlord's main screen
         }
     }
 
@@ -227,10 +191,8 @@ public class NewPropertyScreen extends UIScreen implements StatefulView {
         if (dbOperation == PropertyHandler.dbOperations.ADD_PROPERTY) {
             // failed adding a new property
             displayErrorToast("Failed to add property!");
-        }
-        else {
+        } else {
             displayErrorToast((String) payload);
         }
     }
-
 }

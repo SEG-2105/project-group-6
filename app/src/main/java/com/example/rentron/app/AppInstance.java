@@ -79,7 +79,7 @@ public class AppInstance {
     }
 
     /**
-     * Sets app's admin inbox
+     * Sets app's property Manager inbox
      * @param propertyManagerInbox PropertyManagerInbox instance
      */
     public void setPropertyManagerInbox(PropertyManagerInbox propertyManagerInbox) throws NullPointerException {
@@ -118,6 +118,14 @@ public class AppInstance {
 
     public void setPendingRequestsScreen(PendingRequestsScreen pendingRequestsScreen) {
         this.pendingRequestsScreen = pendingRequestsScreen;
+    }
+
+    public LandlordScreen getRequestsInProgressScreen() {
+        return landlordScreen;
+    }
+
+    public void setRequestsInProgressScreen(LandlordScreen landlordScreen) {
+        this.landlordScreen = landlordScreen;
     }
 
     public LandlordScreen getLandlordScreen() {
